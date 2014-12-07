@@ -5,6 +5,8 @@ class Test_Basic_crypto_checks(unittest.TestCase):
     def setUp(self):
         self.check = shift_ciphers.Basic_cryto_checks()
         self.text = "123 abc XYZ !@#"
+        self.alph = "abcdefghijklmnopqrstuvwxyz"
+        self.num = list(range(26))
 
     def test_is_string(self):
         result = self.check._is_string(self.text)
@@ -29,6 +31,22 @@ class Test_Basic_crypto_checks(unittest.TestCase):
         result = self.check._make_uppercase(self.text)
         answer = "123 ABC XYZ !@#"
         self.assertEqual(result, answer)
+
+    def test_char_to_num(self):
+        result = []
+        for num in self.check._char_to_num(self.alph):
+            result.append(num)
+
+        answer = list(range(26))
+        self.assertEqual(result, answer)
+
+    def test_num_to_char(self):
+        result = ""
+        for char in self.check._num_to_char(self.num):
+            result = result + char
+
+        answer = self.alph
+        self.assertEqual(result, answer) 
 
 if __name__=="__main__":
     unittest.main()

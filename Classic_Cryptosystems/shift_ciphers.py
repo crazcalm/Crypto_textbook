@@ -9,12 +9,13 @@ Spaces and punctuation are omitted.
 
 import string
 
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+
 
 class Basic_cryto_checks():
     """
     Class of basic checks needed for all of these ciphers
     """
-
     def _is_string(self, text):
         return isinstance(text, str)
         
@@ -36,6 +37,16 @@ class Basic_cryto_checks():
     def _make_uppercase(self, text):
         return text.upper()
 
+    def _char_to_num(self, text):
+        for char in text.lower():
+            if char in alphabet:
+                yield alphabet.index(char)
+
+    def _num_to_char(self, num_list):
+        for num in num_list:
+            index = num % 26
+            yield alphabet[index]
+
 class Caesar_cipher(Basic_cryto_checks):
     """
     One of the earliest cryptosystems is often attributed to Julius Caesar.
@@ -56,6 +67,7 @@ class Caesar_cipher(Basic_cryto_checks):
         self.key = key        
         self.plaintext = plaintext
         self.ciphertext = ciiphertext
+        self.alphabet_num = "abcdefghijklmnopqrstuv"
 
     def encrypt(self):
         pass
