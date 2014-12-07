@@ -9,7 +9,33 @@ Spaces and punctuation are omitted.
 
 import string
 
-class Caesar_cipher():
+
+class Basic_cryto_checks():
+    """
+    Class of basic checks needed for all of these ciphers
+    """
+
+    def _is_string(self, text):
+        return isinstance(text, str)
+        
+    def _no_special_chars(self, text):
+        """
+        Removes special characters
+        """
+        results = "".join([char for char in text if in string.letters])
+        return results
+
+    def _no_spaces(self, text):
+        results = "".join([char for char in text if not in string.whitespace])
+        return results
+
+    def _make_lowercase(self, text):
+        return text.lower()
+
+    def _make_uppercase(self, text):
+        return text.upper()
+
+class Caesar_cipher(Basic_cryto_checks):
     """
     One of the earliest cryptosystems is often attributed to Julius Caesar.
     Suppose he wanted to send a plaintext such as
@@ -30,23 +56,8 @@ class Caesar_cipher():
         self.plaintext = plaintext
         self.ciphertext = ciiphertext
 
-    
-    def _is_string(self, text):
-        return isinstance(text, str)
-        
-    def _no_special_chars(self, text):
-        pass
-
-    def _no_spaces(self, text):
-        pass
-
-    def _make_lowercase(self, key):
-        pass
-
-    def _make_uppercase(self, key):
-        pass
-
     def encrypt(self):
         pass
 
     def decrypt(self):
+        pass
