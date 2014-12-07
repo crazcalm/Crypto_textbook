@@ -22,11 +22,12 @@ class Basic_cryto_checks():
         """
         Removes special characters
         """
-        results = "".join([char for char in text if in string.letters])
+        wanted_chars = string.letters + string.digits + string.whitespace
+        results = "".join([char for char in text if char in wanted_chars])
         return results
 
     def _no_spaces(self, text):
-        results = "".join([char for char in text if not in string.whitespace])
+        results = "".join([char for char in text if char not in string.whitespace])
         return results
 
     def _make_lowercase(self, text):
