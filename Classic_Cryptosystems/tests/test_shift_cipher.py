@@ -48,5 +48,25 @@ class Test_Basic_crypto_checks(unittest.TestCase):
         answer = self.alph
         self.assertEqual(result, answer) 
 
+class Test_Caesar_cipher(unittest.TestCase):
+    
+    def setUp(self):
+        pass
+
+    def test__init__(self):
+        pass
+
+    def test__format_plaintext(self):
+        pass
+
+    def test_shift(self):
+        pass
+
+    def test_encrypt(self):
+        pass
+
+    def test_decrypt(self):
+        pass
+
 if __name__=="__main__":
     unittest.main()

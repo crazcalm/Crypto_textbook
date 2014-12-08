@@ -63,14 +63,59 @@ class Caesar_cipher(Basic_cryto_checks):
 
     Decryption was accomplished by shifting back by three spaces
     """
-    def __init__(self, key, plaintext=None, ciphertext=None):
+    def __init__(self, key, plaintext=None, ciphertext=None, formated_plaintext=None,
+                    shifted_plain_nums=None, plain_nums=[], key_shift=None,
+                    cipher_nums=[]):
         self.key = key        
         self.plaintext = plaintext
         self.ciphertext = ciiphertext
-        self.alphabet_num = "abcdefghijklmnopqrstuv"
+        self.formated_plaintext = formated_plaintext
+        self.shifted_plain_nums = shifted_plain_nums
+        self.plain_nums = plain_nums
+        self.key_shift = key_shift
+        self.cipher_nums = cipher_nums
 
     def encrypt(self):
-        pass
+        """
+        Steps:
+            1. convert key to num
+            2. convert plaintext to numbers
+            3. apply shift.
+            4. convert numbers to ciphertext
+        """
+        # Key shift value
+        for num in self._num_to_char(self.key):
+            self.key_shift = num
+
+        # convert plaintext to numbers
+        formated_plaintext = self._format_plaintext(self.plaintext)
+        for num in self._char_to_num(plaintext):
+            self.plain_nums.append(num)
+
+        # Shift plaintext numbers
+        for num in self.shift(self.plain_nums):
+            self.cipher_nums.append(num)
+
+        # obtain ciphertext
+        self.ciphertext = ""
+        for char in self._char_to_num(self.cipher_nums):
+            self.ciphertext = self.ciphertext + char
+
+        return self.ciphertext
+
+    def _format_plaintext(self):
+        """
+        Makes sure that there are not spaces, special characters or whitespace
+        """
+        plaintext = self.plaintext
+        plaintext = self._make_lowercase(plaintext)
+        plaintext = self._no_special_char(plaintext)
+        plaintext = self._no_paces(plaintext)
+        return plaintext
+
+    def shift(self):
+        for num in self._char_to_num(self.plain_nums):
+            yield num + self.key_shift
 
     def decrypt(self):
         pass
