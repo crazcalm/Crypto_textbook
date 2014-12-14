@@ -86,6 +86,7 @@ class Caesar_cipher(Basic_cryto_checks):
             2. convert plaintext to numbers
             3. apply shift.
             4. convert numbers to ciphertext
+            5. Capitalize the ciphertext
         """
         # Key shift value
         for num in self._char_to_num(self.key):
@@ -99,7 +100,7 @@ class Caesar_cipher(Basic_cryto_checks):
 
         # Shift plaintext numbers
         self.cipher_nums=[]
-        for num in self.shift(self.plain_nums):
+        for num in self.shift(self.plain_nums, self.key_shift):
             self.cipher_nums.append(num)
 
         # obtain ciphertext
@@ -120,9 +121,35 @@ class Caesar_cipher(Basic_cryto_checks):
         plaintext = self._no_spaces(plaintext)
         return plaintext
 
-    def shift(self, nums):
+    def shift(self, nums, shift):
         for num in nums:
-            yield num + self.key_shift
+            yield num + shift
 
     def decrypt(self):
-        pass
+        """
+        Steps:
+
+            1. Lowercase the ciphertext
+            2. Convert ciphertext to numbers
+            3. apply shift
+            4. Convert numbers to plaintext chars
+        """
+        # Make lowercase
+        self.ciphertext = self._make_lowercase(self.ciphertext)
+        
+        #Convert ciphertext to numbers
+        self.cipher_nums = []
+        for num in self._char_to_num(self.ciphertext):
+            self.cipher_nums.append(num)
+
+        #Apply shift
+        self.plain_nums = []
+        for num in self.shift(self.cipher_nums, -self.key_shift):
+            self.plain_nums.append(num)
+
+        #Convert numbers to plaintext
+        self.plaintext = ""
+        for char in self._num_to_char(self.plain_nums):
+            self.plaintext = self.plaintext + char
+
+        return self.plaintext

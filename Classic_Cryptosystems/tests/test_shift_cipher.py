@@ -64,7 +64,7 @@ class Test_Caesar_cipher(unittest.TestCase):
         result = []
         self.cipher.key_shift = 1
         self.cipher.plain_nums = [0,1,2]
-        for num in self.cipher.shift([0,1,2]):
+        for num in self.cipher.shift([0,1,2], 1):
             result.append(num)
         self.assertEqual(result, answer)        
 
@@ -73,7 +73,10 @@ class Test_Caesar_cipher(unittest.TestCase):
         self.assertEqual(self.cipher.encrypt(), answer)
 
     def test_decrypt(self):
-        pass
+        answer = 'abcxyz'
+        self.cipher.key_shift = 1
+        self.cipher.ciphertext = "BCDYZA"
+        self.assertEqual(self.cipher.decrypt(), answer)
 
 if __name__=="__main__":
     unittest.main()
