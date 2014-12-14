@@ -51,19 +51,26 @@ class Test_Basic_crypto_checks(unittest.TestCase):
 class Test_Caesar_cipher(unittest.TestCase):
     
     def setUp(self):
-        pass
-
-    def test__init__(self):
-        pass
+        self.key = "b"
+        self.plaintext = "123 abc XYZ !@#"
+        self.cipher = shift_ciphers.Caesar_cipher(self.key, self.plaintext)
 
     def test__format_plaintext(self):
-        pass
+        answer = "123abcxyz"
+        self.assertEqual(self.cipher._format_plaintext(), answer)
 
     def test_shift(self):
-        pass
+        answer = [1,2,3]
+        result = []
+        self.cipher.key_shift = 1
+        self.cipher.plain_nums = [0,1,2]
+        for num in self.cipher.shift([0,1,2]):
+            result.append(num)
+        self.assertEqual(result, answer)        
 
     def test_encrypt(self):
-        pass
+        answer = "BCDYZA"
+        self.assertEqual(self.cipher.encrypt(), answer)
 
     def test_decrypt(self):
         pass

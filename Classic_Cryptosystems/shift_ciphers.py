@@ -10,6 +10,7 @@ Spaces and punctuation are omitted.
 import string
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
+numbers = [1,2,3,4,5,6,7,8,9,0]
 
 
 class Basic_cryto_checks():
@@ -38,14 +39,17 @@ class Basic_cryto_checks():
         return text.upper()
 
     def _char_to_num(self, text):
-        for char in text.lower():
-            if char in alphabet:
-                yield alphabet.index(char)
+        for char in text:
+            if char.lower() in alphabet:
+                yield alphabet.index(char.lower())
 
     def _num_to_char(self, num_list):
         for num in num_list:
-            index = num % 26
-            yield alphabet[index]
+            try:
+                index = num % 26
+                yield alphabet[index]
+            except:
+                yield str(num)
 
 class Caesar_cipher(Basic_cryto_checks):
     """
@@ -63,12 +67,12 @@ class Caesar_cipher(Basic_cryto_checks):
 
     Decryption was accomplished by shifting back by three spaces
     """
-    def __init__(self, key, plaintext=None, ciphertext=None, formated_plaintext=None,
-                    shifted_plain_nums=None, plain_nums=[], key_shift=None,
+    def __init__(self, key=None, plaintext=None, ciphertext=None, formated_plaintext=None,
+                    shifted_plain_nums=None, plain_nums=[], key_shift=0,
                     cipher_nums=[]):
         self.key = key        
         self.plaintext = plaintext
-        self.ciphertext = ciiphertext
+        self.ciphertext = ciphertext
         self.formated_plaintext = formated_plaintext
         self.shifted_plain_nums = shifted_plain_nums
         self.plain_nums = plain_nums
@@ -84,23 +88,26 @@ class Caesar_cipher(Basic_cryto_checks):
             4. convert numbers to ciphertext
         """
         # Key shift value
-        for num in self._num_to_char(self.key):
+        for num in self._char_to_num(self.key):
             self.key_shift = num
 
         # convert plaintext to numbers
-        formated_plaintext = self._format_plaintext(self.plaintext)
-        for num in self._char_to_num(plaintext):
+        self.plain_nums=[]
+        self.formated_plaintext = self._format_plaintext()
+        for num in self._char_to_num(self.formated_plaintext):
             self.plain_nums.append(num)
 
         # Shift plaintext numbers
+        self.cipher_nums=[]
         for num in self.shift(self.plain_nums):
             self.cipher_nums.append(num)
 
         # obtain ciphertext
         self.ciphertext = ""
-        for char in self._char_to_num(self.cipher_nums):
+        for char in self._num_to_char(self.cipher_nums):
             self.ciphertext = self.ciphertext + char
 
+        self.ciphertext = self._make_uppercase(self.ciphertext)
         return self.ciphertext
 
     def _format_plaintext(self):
@@ -109,12 +116,12 @@ class Caesar_cipher(Basic_cryto_checks):
         """
         plaintext = self.plaintext
         plaintext = self._make_lowercase(plaintext)
-        plaintext = self._no_special_char(plaintext)
-        plaintext = self._no_paces(plaintext)
+        plaintext = self._no_special_chars(plaintext)
+        plaintext = self._no_spaces(plaintext)
         return plaintext
 
-    def shift(self):
-        for num in self._char_to_num(self.plain_nums):
+    def shift(self, nums):
+        for num in nums:
             yield num + self.key_shift
 
     def decrypt(self):
