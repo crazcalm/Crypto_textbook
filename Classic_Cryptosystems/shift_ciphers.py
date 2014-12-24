@@ -8,6 +8,10 @@ Spaces and punctuation are omitted.
 """
 
 import string
+try:
+    from string import ascii_letters as letters
+except:
+    from string import letters
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 numbers = [1,2,3,4,5,6,7,8,9,0]
@@ -24,7 +28,7 @@ class Basic_cryto_checks():
         """
         Removes special characters
         """
-        wanted_chars = string.letters + string.digits + string.whitespace
+        wanted_chars = letters + string.digits + string.whitespace
         results = "".join([char for char in text if char in wanted_chars])
         return results
 
